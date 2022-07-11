@@ -16,6 +16,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import Controller.CategoryUserContorller;
 import Database.DatabaseHandler;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -103,11 +107,25 @@ public class Registrasi extends JFrame implements ActionListener {
 
         frame.setVisible(true);
     }
-
+    private String photoDir;
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==submit) {
-            
+            String query = "INSERT INTO users(nama, email, password, photo, id_category";
+        } else if(e.getSource()==photo) {
+            JFileChooser foto = new JFileChooser();
+            foto.setDialogTitle("Pilih Foto");
+            foto.setAcceptAllFileFilterUsed(false);
+            FileNameExtensionFilter fotoFilter = new FileNameExtensionFilter("jpg/png/jpeg", "jpg", "png", "jpeg");
+            foto.addChoosableFileFilter(fotoFilter);
+            int fotoReturn = foto.showOpenDialog(null);
+            if (fotoReturn == JFileChooser.APPROVE_OPTION) {
+                File file = new File(foto.getSelectedFile().getPath());
+                photoDir = file.toString();
+                JOptionPane.showMessageDialog(null, "insert Foto Berhasil!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Insert Foto Gagal!");
+            }
         }
     }
     
